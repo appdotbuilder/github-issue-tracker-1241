@@ -1,9 +1,17 @@
 
+import { db } from '../db';
+import { projectsTable } from '../db/schema';
 import { type Project } from '../schema';
 
-export async function getProjects(): Promise<Project[]> {
-    // This is a placeholder declaration! Real code should be implemented here.
-    // The goal of this handler is fetching all projects from the database.
-    // Should return projects with creator information and member counts.
-    return [];
-}
+export const getProjects = async (): Promise<Project[]> => {
+  try {
+    const results = await db.select()
+      .from(projectsTable)
+      .execute();
+
+    return results;
+  } catch (error) {
+    console.error('Failed to fetch projects:', error);
+    throw error;
+  }
+};
